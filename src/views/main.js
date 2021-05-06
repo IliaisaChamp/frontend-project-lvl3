@@ -13,5 +13,4 @@ const mainHtml = `
   </section>
 </main>
 `;
-git
 export default () => mainHtml;
