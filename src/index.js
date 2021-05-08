@@ -1,5 +1,3 @@
-import './scss/index.sass';
-import main from './views/main';
+import init from './init';
 
-const point = document.querySelector('#point');
-point.innerHTML = main();
+init();
