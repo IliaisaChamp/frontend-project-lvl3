@@ -13,7 +13,7 @@ const getRssData = (url) => {
   return axios.get(originsUlr).then((resolve) => parser(resolve.data));
 };
 
-i18next.init({ lng: 'ru', debug: false, resources: { ru } }).then((t) => t);
+i18next.init({ lng: 'ru', debug: false, resources: { ru } }, (t) => t);
 
 export default (rssUrl, err) => {
   const feedback = new Feedback();
