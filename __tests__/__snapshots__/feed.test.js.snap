@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`renders correctly 1`] = `"<li class=\\"list-group-item\\"><h3>Test</h3><p>test desc</p></li>"`;
