@@ -7,17 +7,19 @@ import formController from './controllers/form';
 import ru from './utils/ru';
 
 export default () => {
-  i18next
-    .init({
+  i18next.init(
+    {
       lng: 'ru',
+      debug: true,
       resources: {
         ru,
       },
-    })
-    .then(() => {
+    },
+    (err, t) => {
       const point = document.querySelector('#point');
       point.innerHTML = main();
 
       formController();
-    });
+    },
+  );
 };
