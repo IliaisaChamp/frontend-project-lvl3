@@ -5,6 +5,7 @@ import axios from 'axios';
 import parser from './parser';
 import Feedback from './Feedback.js';
 import state from './state';
+import ru from './utils/ru';
 import { createFeed, updateFeed } from './views';
 
 const getRssData = (url) => {
@@ -12,6 +13,8 @@ const getRssData = (url) => {
   // const originsUlr = `https://cors-anywhere.herokuapp.com/${url}`;
   return axios.get(originsUlr).then((resolve) => parser(resolve.data));
 };
+
+i18next.init({ lng: 'ru', debug: false, resources: { ru } }).then((t) => t);
 
 export default (rssUrl, err) => {
   const feedback = new Feedback();
