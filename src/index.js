@@ -1,3 +1,5 @@
 import init from './init';
 
-init();
+document.addEventListener('DOMContentLoaded', () => {
+  init();
+}, false);

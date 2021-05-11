@@ -10,7 +10,6 @@ import { createFeed, updateFeed } from './views';
 
 const getRssData = (url) => {
   const originsUlr = `https://hexlet-allorigins.herokuapp.com/raw?url=${url}`;
-  // const originsUlr = `https://cors-anywhere.herokuapp.com/${url}`;
   return axios.get(originsUlr).then((resolve) => parser(resolve.data));
 };
 
