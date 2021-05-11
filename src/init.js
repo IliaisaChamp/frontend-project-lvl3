@@ -6,17 +6,13 @@ import formController from './controllers/form';
 import ru from './utils/ru';
 
 export default () => {
-  formController();
-  i18next.init(
-    {
+  i18next
+    .init({
       lng: 'ru',
       debug: false,
       resources: {
         ru,
       },
-    },
-    (err) => {
-      if (err) throw err;
-    },
-  );
+    })
+    .then(() => formController());
 };
