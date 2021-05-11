@@ -5,14 +5,4 @@ import 'bootstrap/js/dist/alert';
 import formController from './controllers/form';
 import ru from './utils/ru';
 
-export default () => {
-  i18next
-    .init({
-      lng: 'ru',
-      debug: false,
-      resources: {
-        ru,
-      },
-    })
-    .then(() => formController());
-};
+export default () => i18next.init({ lng: 'ru', debug: false, resources: { ru } }).then(() => formController());
