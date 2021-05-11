@@ -1,19 +1,17 @@
 import schema from '../utils/validate';
-import model from '../model/model';
+import model from '../model';
 
 export default () => {
   const form = document.querySelector('.rss-form');
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const { url } = form.elements;
-
+    const formData = new FormData(form);
+    const url = formData.get('url');
+    url.trim();
     schema
-      .validate({ rssUrl: url.value.trim() })
-      .then((resolve) => {
-        const rssUrl = resolve.rssUrl.trim();
-        model(rssUrl);
-      })
+      .validate({ rssUrl: url })
+      .then((resolve) => model(resolve.rssUrl))
       .catch((err) => {
         if (err) {
           model(null, err);

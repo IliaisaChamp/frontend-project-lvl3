@@ -5,6 +5,7 @@ export default {
       exist: 'RSS уже существует',
       unsuccess: 'RSS ошибка загрузки',
       success: 'RSS успешно загружен',
+      loading: 'Загрузка...',
     },
   },
 };

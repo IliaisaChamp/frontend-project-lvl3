@@ -1,17 +1,11 @@
 export default {
   rssForm: {
-    state: 'valid',
-    data: {
-      url: '',
-    },
+    state: null,
+  },
+  response: {
+    state: null,
   },
   feeds: {
-    state: '',
-    urls: [],
-    feedsList: [],
-    posts: [],
-  },
-  request: {
-    state: 'default',
+
   },
 };

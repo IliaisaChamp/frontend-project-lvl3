@@ -9,7 +9,7 @@ build:
 	NODE_ENV=production npx webpack
 
 test:
-	npm test
+	npm test --experimental-vm-modules
 
 lint:
 	npx eslint .
