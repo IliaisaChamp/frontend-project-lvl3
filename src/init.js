@@ -15,7 +15,8 @@ export default () => {
         ru,
       },
     },
-    (err, t) => {
+    (err) => {
+      if (err) throw err;
       const point = document.querySelector('#point');
       point.innerHTML = main();
 
