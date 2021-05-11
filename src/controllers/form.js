@@ -4,7 +4,8 @@ import model from '../model';
 export default () => {
   document.addEventListener(
     'DOMContentLoaded',
-    () => {
+    (ev) => {
+      console.log(ev);
       const form = document.querySelector('.rss-form');
 
       form.addEventListener('submit', (e) => {
