@@ -1,3 +1,3 @@
 import init from './model';
 
-init();
+export default init();
