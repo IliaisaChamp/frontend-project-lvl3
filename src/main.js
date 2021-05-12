@@ -17,9 +17,6 @@ const getRssData = (url) => {
   return axios.get(originsUlr).then((resolve) => parser(resolve.data));
 };
 
-i18next.init({ lng: 'ru', debug: false, resources: { ru } }, (t) => t);
-
-// export default () => {
 const feedback = new Feedback();
 
 const watchedFormState = onChange(state, (path, value) => {
@@ -88,6 +85,7 @@ const model = (rssUrl, err) => {
       }
     });
 };
+
 export default () => {
   i18next.init({ lng: 'ru', debug: false, resources: { ru } }).then(() => {
     const form = document.querySelector('.rss-form');

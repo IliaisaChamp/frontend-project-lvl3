@@ -1,3 +1,3 @@
-import init from './model';
+import init from './main.js';
 
 init();
