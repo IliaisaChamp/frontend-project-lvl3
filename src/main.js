@@ -61,7 +61,7 @@ const model = (rssUrl, responseState, feedback, err) => {
   const isEqual = (post1, post2) => (
     post1.title === post2.title && post1.description === post2.description
   );
-
+  watchedResponseState.response.state = 'procesing';
   const updateFeeds = (url) => {
     setTimeout(() => {
       getRssData(url)
@@ -89,7 +89,6 @@ const model = (rssUrl, responseState, feedback, err) => {
 
   getRssData(rssUrl)
     .then((data) => {
-      watchedResponseState.response.state = 'procesing';
       watchedResponseState.feeds[rssUrl] = data;
       watchedResponseState.response.state = 'success';
       updateFeeds(rssUrl);
