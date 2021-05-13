@@ -4,7 +4,7 @@ import i18next from 'i18next';
 import axios from 'axios';
 import parser from './parser';
 import schema from './utils/validate';
-import ru from './utils/texts';
+// import ru from './utils/texts';
 import feedbackMessages from './utils/feedback';
 import { createFeed, updateFeed } from './views';
 import './scss/index.sass';
@@ -109,24 +109,44 @@ const initApp = () => {
   };
   const feedback = feedbackMessages();
 
-  i18next.init({ lng: 'ru', debug: false, resources: { ru } }).then(() => {
-    const form = document.querySelector('.rss-form');
+  i18next
+    .init({
+      lng: 'ru',
+      debug: false,
+      resources: {
+        ru: {
+          translation: {
+            feedback: {
+              invalid: 'Ссылка должна быть валидным URL',
+              exist: 'RSS уже существует',
+              empty: 'Не должно быть пустым',
+              unsuccess: 'Ошибка сети',
+              parsererror: 'Ресурс не содержит валидный RSS',
+              success: 'RSS успешно загружен',
+              loading: 'Загрузка...',
+            },
+          },
+        },
+      },
+    })
+    .then(() => {
+      const form = document.querySelector('.rss-form');
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const url = formData.get('url');
-      url.trim();
-      schema
-        .validate({ rssUrl: url, input: url })
-        .then((resolve) => model(resolve.rssUrl, state, feedback))
-        .catch((error) => {
-          if (error) {
-            model(null, state, feedback, error);
-          }
-        });
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const url = formData.get('url');
+        url.trim();
+        schema
+          .validate({ rssUrl: url, input: url })
+          .then((resolve) => model(resolve.rssUrl, state, feedback))
+          .catch((error) => {
+            if (error) {
+              model(null, state, feedback, error);
+            }
+          });
+      });
     });
-  });
 };
 
 export default initApp;
