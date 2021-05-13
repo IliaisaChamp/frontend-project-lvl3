@@ -5,7 +5,7 @@ import axios from 'axios';
 import parser from './parser';
 import schema from './utils/validate';
 import Feedback from './Feedback.js';
-import state from './state';
+// import state from './state';
 import ru from './utils/ru';
 import { createFeed, updateFeed } from './views';
 import './scss/index.sass';
@@ -18,6 +18,16 @@ const getRssData = (url) => {
 };
 
 const model = (rssUrl, err) => {
+  const state = {
+    rssForm: {
+      state: null,
+    },
+    response: {
+      state: null,
+    },
+    feeds: {},
+  };
+
   const feedback = new Feedback();
 
   const watchedFormState = onChange(state, (path, value) => {
