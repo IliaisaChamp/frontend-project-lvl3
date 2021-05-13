@@ -4,7 +4,7 @@ import i18next from 'i18next';
 import axios from 'axios';
 import parser from './parser';
 import schema from './utils/validate';
-import { showValidMessage, resetForm, showResponseMessage } from './feedback';
+import feedback from './feedback';
 import ru from './utils/texts';
 import { createFeed, updateFeed } from './views';
 import './scss/index.sass';
@@ -19,26 +19,26 @@ const getRssData = (url) => {
 const model = (rssUrl, state, err) => {
   const watchedFormState = onChange(state, (path, value) => {
     if (path === 'rssForm.state') {
-      if (value === 'invalid') showValidMessage(i18next.t('feedback.invalid'), false);
-      if (value === 'exist') showValidMessage(i18next.t('feedback.exist'), false);
-      if (value === 'empty') showValidMessage(i18next.t('feedback.empty'), false);
+      if (value === 'invalid') feedback.showValidMessage(i18next.t('feedback.invalid'), false);
+      if (value === 'exist') feedback.showValidMessage(i18next.t('feedback.exist'), false);
+      if (value === 'empty') feedback.showValidMessage(i18next.t('feedback.empty'), false);
     }
   });
 
   const watchedResponseState = onChange(state, (path, value) => {
     if (path === 'response.state') {
-      if (value === 'unsuccess') showResponseMessage(i18next.t('feedback.unsuccess'));
-      if (value === 'parsererror') showResponseMessage(i18next.t('feedback.parsererror'));
+      if (value === 'unsuccess') feedback.showResponseMessage(i18next.t('feedback.unsuccess'));
+      if (value === 'parsererror') feedback.showResponseMessage(i18next.t('feedback.parsererror'));
       if (value === 'success') {
-        showResponseMessage(
+        feedback.showResponseMessage(
           i18next.t('feedback.success'),
           true,
           false,
         );
         createFeed(state.feeds);
-        resetForm();
+        feedback.resetForm();
       }
-      if (value === 'procesing') showResponseMessage(i18next.t('feedback.loading'), true, true);
+      if (value === 'procesing') feedback.showResponseMessage(i18next.t('feedback.loading'), true, true);
       if (value === 'update') updateFeed(state.feeds);
     }
   });
