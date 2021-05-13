@@ -17,6 +17,7 @@ export default class Feedback {
     this.feedback.textContent = message;
     this.feedback.classList.toggle(`${flag ? 'text-success' : 'text-danger'}`, true);
     this.button.toggleAttribute('disabled', isDisabled);
+    this.input.toggleAttribute('readonly', isDisabled);
     this.input.classList.remove('is-invalid');
   }
 
