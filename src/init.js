@@ -3,7 +3,7 @@ import schema from './utils/validate';
 import model from './main';
 
 const input = document.querySelector('.inputUrl');
-const form = document.querySelector('.rss-form');
+const rssForm = document.querySelector('.rss-form');
 const button = document.querySelector('button[aria-label="add"]');
 const feedbackEl = document.querySelector('.feedback');
 
@@ -38,7 +38,7 @@ const initApp = () => {
     };
 
     const resetForm = () => {
-      form.reset();
+      rssForm.reset();
     };
 
     return { showValidMessage, showResponseMessage, resetForm };
@@ -67,7 +67,7 @@ const initApp = () => {
       },
     })
     .then(() => {
-      // const form = document.querySelector('.rss-form');
+      const form = document.querySelector('.rss-form');
 
       form.addEventListener('submit', (e) => {
         e.preventDefault();
