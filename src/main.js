@@ -16,18 +16,15 @@ const getRssData = (url) => {
   return axios.get(originsUlr).then((resolve) => parser(resolve.data));
 };
 
-const state = {
-  rssForm: {
-    state: null,
-  },
+const responseState = {
   response: {
     state: null,
   },
   feeds: {},
 };
 
-const model = (rssUrl, feedback, err) => {
-  const watchedFormState = onChange(state, (path, value) => {
+const model = (rssUrl, formState, feedback, err) => {
+  const watchedFormState = onChange(formState, (path, value) => {
     if (path === 'rssForm.state') {
       if (value === 'invalid') feedback.showValidMessage(i18next.t('feedback.invalid'), false);
       if (value === 'exist') feedback.showValidMessage(i18next.t('feedback.exist'), false);
@@ -35,7 +32,7 @@ const model = (rssUrl, feedback, err) => {
     }
   });
 
-  const watchedResponseState = onChange(state, (path, value) => {
+  const watchedResponseState = onChange(responseState, (path, value) => {
     if (path === 'response.state') {
       if (value === 'unsuccess') feedback.showResponseMessage(i18next.t('feedback.unsuccess'));
       if (value === 'parsererror') feedback.showResponseMessage(i18next.t('feedback.parsererror'));
@@ -45,11 +42,11 @@ const model = (rssUrl, feedback, err) => {
           true,
           false,
         );
-        createFeed(state.feeds);
+        createFeed(responseState.feeds);
         feedback.resetForm();
       }
       if (value === 'procesing') feedback.showResponseMessage(i18next.t('feedback.loading'), true, true);
-      if (value === 'update') updateFeed(state.feeds);
+      if (value === 'update') updateFeed(responseState.feeds);
     }
   });
 
@@ -73,7 +70,7 @@ const model = (rssUrl, feedback, err) => {
         .then((data) => {
           const diff = _.differenceWith(
             data.posts,
-            state.feeds[url].posts,
+            responseState.feeds[url].posts,
             isEqual,
           );
           if (!_.isEmpty(diff)) {
@@ -108,6 +105,11 @@ const model = (rssUrl, feedback, err) => {
 };
 
 const initApp = () => {
+  const formState = {
+    rssForm: {
+      state: null,
+    },
+  };
   const feedback = feedbackMessages();
 
   i18next
@@ -140,10 +142,10 @@ const initApp = () => {
         url.trim();
         schema
           .validate({ rssUrl: url, input: url })
-          .then((resolve) => model(resolve.rssUrl, feedback))
+          .then((resolve) => model(resolve.rssUrl, formState, feedback))
           .catch((error) => {
             if (error) {
-              model(null, feedback, error);
+              model(null, formState, feedback, error);
             }
           });
       });
