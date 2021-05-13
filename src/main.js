@@ -17,17 +17,7 @@ const getRssData = (url) => {
   return axios.get(originsUlr).then((resolve) => parser(resolve.data));
 };
 
-const model = (rssUrl, err) => {
-  const state = {
-    rssForm: {
-      state: null,
-    },
-    response: {
-      state: null,
-    },
-    feeds: {},
-  };
-
+const model = (rssUrl, state, err) => {
   const feedback = new Feedback();
 
   const watchedFormState = onChange(state, (path, value) => {
@@ -81,6 +71,7 @@ const model = (rssUrl, err) => {
             isEqual,
           );
           if (!_.isEmpty(diff)) {
+            // eslint-disable-next-line no-param-reassign
             state.feeds[url] = data;
             watchedResponseState.response.state = 'update';
           }
@@ -93,6 +84,7 @@ const model = (rssUrl, err) => {
 
   getRssData(rssUrl)
     .then((data) => {
+      // eslint-disable-next-line no-param-reassign
       state.feeds[rssUrl] = data;
       watchedResponseState.response.state = 'success';
       updateFeeds(rssUrl);
@@ -105,6 +97,16 @@ const model = (rssUrl, err) => {
 };
 
 const initApp = () => {
+  const state = {
+    rssForm: {
+      state: null,
+    },
+    response: {
+      state: null,
+    },
+    feeds: {},
+  };
+
   i18next.init({ lng: 'ru', debug: false, resources: { ru } }).then(() => {
     const form = document.querySelector('.rss-form');
 
@@ -115,10 +117,10 @@ const initApp = () => {
       url.trim();
       schema
         .validate({ rssUrl: url, input: url })
-        .then((resolve) => model(resolve.rssUrl))
+        .then((resolve) => model(resolve.rssUrl, state))
         .catch((error) => {
           if (error) {
-            model(null, error);
+            model(null, state, error);
           }
         });
     });
