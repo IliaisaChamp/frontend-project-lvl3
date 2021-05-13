@@ -44,7 +44,7 @@ const model = (rssUrl, responseState, feedback, err) => {
         createFeed(responseState.feeds);
         feedback.resetForm();
       }
-
+      if (value === 'procesing') feedback.showResponseMessage(i18next.t('feedback.loading'), true, true);
       if (value === 'update') updateFeed(responseState.feeds);
     }
   });
@@ -57,7 +57,6 @@ const model = (rssUrl, responseState, feedback, err) => {
     watchedFormState.rssForm.state = 'exist';
     return;
   }
-  watchedResponseState.response.state = 'procesing';
 
   const isEqual = (post1, post2) => (
     post1.title === post2.title && post1.description === post2.description
@@ -90,6 +89,7 @@ const model = (rssUrl, responseState, feedback, err) => {
 
   getRssData(rssUrl)
     .then((data) => {
+      watchedResponseState.response.state = 'procesing';
       watchedResponseState.feeds[rssUrl] = data;
       watchedResponseState.response.state = 'success';
       updateFeeds(rssUrl);
