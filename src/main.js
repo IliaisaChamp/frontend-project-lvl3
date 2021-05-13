@@ -37,7 +37,7 @@ export default () => {
         createFeed(state.feeds);
         feedback.resetForm();
       }
-      if (value === 'procesing') feedback.showResponseMessage(i18next.t('feedback.loading'), true, true);
+      // if (value === 'procesing') feedback.showResponseMessage(i18next.t('feedback.loading'), true, true);
       if (value === 'update') updateFeed(state.feeds);
     }
   });
