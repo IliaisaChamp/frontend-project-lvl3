@@ -4,9 +4,8 @@ import i18next from 'i18next';
 import axios from 'axios';
 import parser from './parser';
 import schema from './utils/validate';
-import Feedback from './Feedback.js';
-// import state from './state';
-import ru from './utils/ru';
+import { showValidMessage, resetForm, showResponseMessage } from './feedback.js';
+import ru from './utils/texts';
 import { createFeed, updateFeed } from './views';
 import './scss/index.sass';
 import 'bootstrap/js/dist/modal';
@@ -18,35 +17,32 @@ const getRssData = (url) => {
 };
 
 const model = (rssUrl, state, err) => {
-  const feedback = new Feedback();
-
   const watchedFormState = onChange(state, (path, value) => {
     if (path === 'rssForm.state') {
-      if (value === 'invalid') feedback.showValidMessage(i18next.t('feedback.invalid'), false);
-      if (value === 'exist') feedback.showValidMessage(i18next.t('feedback.exist'), false);
-      if (value === 'empty') feedback.showValidMessage(i18next.t('feedback.empty'), false);
+      if (value === 'invalid') showValidMessage(i18next.t('feedback.invalid'), false);
+      if (value === 'exist') showValidMessage(i18next.t('feedback.exist'), false);
+      if (value === 'empty') showValidMessage(i18next.t('feedback.empty'), false);
     }
   });
 
   const watchedResponseState = onChange(state, (path, value) => {
     if (path === 'response.state') {
-      if (value === 'unsuccess') feedback.showResponseMessage(i18next.t('feedback.unsuccess'));
-      if (value === 'parsererror') feedback.showResponseMessage(i18next.t('feedback.parsererror'));
+      if (value === 'unsuccess') showResponseMessage(i18next.t('feedback.unsuccess'));
+      if (value === 'parsererror') showResponseMessage(i18next.t('feedback.parsererror'));
       if (value === 'success') {
-        feedback.showResponseMessage(
+        showResponseMessage(
           i18next.t('feedback.success'),
           true,
           false,
         );
         createFeed(state.feeds);
-        feedback.resetForm();
+        resetForm();
       }
-      if (value === 'procesing') feedback.showResponseMessage(i18next.t('feedback.loading'), true, true);
+      if (value === 'procesing') showResponseMessage(i18next.t('feedback.loading'), true, true);
       if (value === 'update') updateFeed(state.feeds);
     }
   });
 
-  // const model = (rssUrl, err) => {
   if (err) {
     watchedFormState.rssForm.state = err.message;
     return;
@@ -71,8 +67,7 @@ const model = (rssUrl, state, err) => {
             isEqual,
           );
           if (!_.isEmpty(diff)) {
-            // eslint-disable-next-line no-param-reassign
-            state.feeds[url] = data;
+            watchedResponseState.feeds[url] = data;
             watchedResponseState.response.state = 'update';
           }
         })
@@ -89,8 +84,7 @@ const model = (rssUrl, state, err) => {
 
   getRssData(rssUrl)
     .then((data) => {
-      // eslint-disable-next-line no-param-reassign
-      state.feeds[rssUrl] = data;
+      watchedResponseState.feeds[rssUrl] = data;
       watchedResponseState.response.state = 'success';
       updateFeeds(rssUrl);
     })

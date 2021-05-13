@@ -1,27 +1,25 @@
-export default class Feedback {
-  constructor() {
-    this.input = document.querySelector('.inputUrl');
-    this.form = document.querySelector('.rss-form');
-    this.button = document.querySelector('button[aria-label="add"]');
-    this.feedback = document.querySelector('.feedback');
-  }
+const input = document.querySelector('.inputUrl');
+const form = document.querySelector('.rss-form');
+const button = document.querySelector('button[aria-label="add"]');
+const feedback = document.querySelector('.feedback');
 
-  showValidMessage(message, flag) {
-    this.feedback.textContent = message;
-    this.feedback.classList.toggle('text-danger', !flag);
-    this.input.classList.toggle('is-invalid', !flag);
-  }
+const showValidMessage = (message, flag) => {
+  feedback.textContent = message;
+  feedback.classList.toggle('text-danger', !flag);
+  input.classList.toggle('is-invalid', !flag);
+};
 
-  showResponseMessage(message, flag = false, isDisabled) {
-    this.feedback.classList.remove('text-success', 'text-danger');
-    this.feedback.textContent = message;
-    this.feedback.classList.toggle(`${flag ? 'text-success' : 'text-danger'}`, true);
-    this.button.toggleAttribute('disabled', isDisabled);
-    this.input.toggleAttribute('readonly', isDisabled);
-    this.input.classList.remove('is-invalid');
-  }
+const showResponseMessage = (message, flag = false, isDisabled) => {
+  feedback.classList.remove('text-success', 'text-danger');
+  feedback.textContent = message;
+  feedback.classList.toggle(`${flag ? 'text-success' : 'text-danger'}`, true);
+  button.toggleAttribute('disabled', isDisabled);
+  input.toggleAttribute('readonly', isDisabled);
+  input.classList.remove('is-invalid');
+};
 
-  resetForm() {
-    this.form.reset();
-  }
-}
+const resetForm = () => {
+  form.reset();
+};
+
+export { showValidMessage, resetForm, showResponseMessage };
