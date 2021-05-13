@@ -8,6 +8,11 @@ const addModalInfo = (data) => {
       const { id } = e.target.dataset;
       const { url } = e.target.dataset;
       const { title, description, link } = data[url].posts[id - 1];
+      const linkElm = document.querySelector(`a[data-id="${id}"]`);
+      linkElm.classList.remove('fw-bold'); // bootstrap 5
+      linkElm.classList.add('fw-normal'); // bootstrap 5
+      linkElm.classList.remove('font-weight-bold'); // bootstrap 4
+      linkElm.classList.add('font-weight-normal'); // bootstrap 4
       const modal = document.querySelector('#modal');
       modal.querySelector('.modal-title').textContent = title;
       modal.querySelector('.modal-body').textContent = description;
@@ -18,7 +23,7 @@ const addModalInfo = (data) => {
 
 const addArticlesToList = (posts, url) => {
   const createArticle = (post, id) => {
-    const link = `<a href="${post.link}" class="fw-bold" data-id="${id + 1}" target="_blank" rel="noopener noreferrer">${post.title}</a>`;
+    const link = `<a href="${post.link}" class="font-weight-bold fw-bold" data-id="${id + 1}" target="_blank" rel="noopener noreferrer">${post.title}</a>`;
     const button = `<button type="button" class="btn btn-primary btn-sm" data-id="${id + 1}" data-url="${url}" data-bs-toggle="modal" data-bs-target="#modal">Просмотр</button>`;
     return `<li class="list-group-item d-flex justify-content-between align-items-start">${link}${button}</li>`;
   };
