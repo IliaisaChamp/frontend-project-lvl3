@@ -5,7 +5,7 @@ import axios from 'axios';
 import parser from './parser';
 import schema from './utils/validate';
 import ru from './utils/texts';
-import feedback from './feedback.js';
+import feedback from './utils/feedback';
 import { createFeed, updateFeed } from './views';
 import './scss/index.sass';
 import 'bootstrap/js/dist/modal';
