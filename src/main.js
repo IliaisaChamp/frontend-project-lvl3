@@ -76,6 +76,11 @@ const model = (rssUrl, state, err) => {
             watchedResponseState.response.state = 'update';
           }
         })
+        .catch((error) => {
+          if (error) {
+            watchedResponseState.response.state = 'unsuccess';
+          }
+        })
         .finally(() => {
           updateFeeds(url);
         });
@@ -90,8 +95,10 @@ const model = (rssUrl, state, err) => {
       updateFeeds(rssUrl);
     })
     .catch((error) => {
-      if (error) {
+      if (error.message === 'parsererror') {
         watchedResponseState.response.state = error.message;
+      } else {
+        watchedResponseState.response.state = 'unsuccess';
       }
     });
 };
