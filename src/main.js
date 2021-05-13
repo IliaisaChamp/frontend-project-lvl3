@@ -5,11 +5,16 @@ import axios from 'axios';
 import parser from './parser';
 import schema from './utils/validate';
 import ru from './utils/texts';
-import feedbackMessage from './utils/feedback';
+// import feedbackMessage from './utils/feedback';
 import { createFeed, updateFeed } from './views';
 import './scss/index.sass';
 import 'bootstrap/js/dist/modal';
 import 'bootstrap/js/dist/alert';
+
+const input = document.querySelector('.inputUrl');
+const rssForm = document.querySelector('.rss-form');
+const button = document.querySelector('button[aria-label="add"]');
+const feedbackEl = document.querySelector('.feedback');
 
 const getRssData = (url) => {
   const originsUlr = `https://hexlet-allorigins.herokuapp.com/get?disableCache=true&url=${url}`;
@@ -17,29 +22,47 @@ const getRssData = (url) => {
 };
 
 const model = (rssUrl, state, err) => {
-  const feedback = feedbackMessage;
+  const showValidMessage = (message, flag) => {
+    feedbackEl.textContent = message;
+    feedbackEl.classList.toggle('text-danger', !flag);
+    input.classList.toggle('is-invalid', !flag);
+  };
+
+  const showResponseMessage = (message, flag = false, isDisabled) => {
+    feedbackEl.classList.remove('text-success', 'text-danger');
+    feedbackEl.textContent = message;
+    feedbackEl.classList.toggle(`${flag ? 'text-success' : 'text-danger'}`, true);
+    button.toggleAttribute('disabled', isDisabled);
+    input.toggleAttribute('readonly', isDisabled);
+    input.classList.remove('is-invalid');
+  };
+
+  const resetForm = () => {
+    rssForm.reset();
+  };
+
   const watchedFormState = onChange(state, (path, value) => {
     if (path === 'rssForm.state') {
-      if (value === 'invalid') feedback.showValidMessage(i18next.t('feedback.invalid'), false);
-      if (value === 'exist') feedback.showValidMessage(i18next.t('feedback.exist'), false);
-      if (value === 'empty') feedback.showValidMessage(i18next.t('feedback.empty'), false);
+      if (value === 'invalid') showValidMessage(i18next.t('feedback.invalid'), false);
+      if (value === 'exist') showValidMessage(i18next.t('feedback.exist'), false);
+      if (value === 'empty') showValidMessage(i18next.t('feedback.empty'), false);
     }
   });
 
   const watchedResponseState = onChange(state, (path, value) => {
     if (path === 'response.state') {
-      if (value === 'unsuccess') feedback.showResponseMessage(i18next.t('feedback.unsuccess'));
-      if (value === 'parsererror') feedback.showResponseMessage(i18next.t('feedback.parsererror'));
+      if (value === 'unsuccess') showResponseMessage(i18next.t('feedback.unsuccess'));
+      if (value === 'parsererror') showResponseMessage(i18next.t('feedback.parsererror'));
       if (value === 'success') {
-        feedback.showResponseMessage(
+        showResponseMessage(
           i18next.t('feedback.success'),
           true,
           false,
         );
         createFeed(state.feeds);
-        feedback.resetForm();
+        resetForm();
       }
-      if (value === 'procesing') feedback.showResponseMessage(i18next.t('feedback.loading'), true, true);
+      if (value === 'procesing') showResponseMessage(i18next.t('feedback.loading'), true, true);
       if (value === 'update') updateFeed(state.feeds);
     }
   });
@@ -109,7 +132,7 @@ const initApp = () => {
     feeds: {},
   };
 
-  i18next.init({ lng: 'ru', debug: false, resources: { ru } }).then(() => {
+  i18next.init({ lng: 'ru', debug: true, resources: { ru } }).then(() => {
     const form = document.querySelector('.rss-form');
 
     form.addEventListener('submit', (e) => {
