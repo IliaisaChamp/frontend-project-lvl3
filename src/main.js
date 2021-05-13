@@ -4,7 +4,7 @@ import i18next from 'i18next';
 import axios from 'axios';
 import parser from './parser';
 import schema from './utils/validate';
-import { showValidMessage, resetForm, showResponseMessage } from './feedback.js';
+import { showValidMessage, resetForm, showResponseMessage } from './feedback';
 import ru from './utils/texts';
 import { createFeed, updateFeed } from './views';
 import './scss/index.sass';
