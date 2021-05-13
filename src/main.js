@@ -4,12 +4,10 @@ import i18next from 'i18next';
 import axios from 'axios';
 import parser from './parser';
 import schema from './utils/validate';
-// import ru from './utils/texts';
+import ru from './utils/texts';
+import { isEqual } from './utils/utils';
 import feedbackMessages from './utils/feedback';
 import { createFeed, updateFeed } from './views';
-import './scss/index.sass';
-import 'bootstrap/js/dist/modal';
-import 'bootstrap/js/dist/alert';
 
 const getRssData = (url) => {
   const originsUlr = `https://hexlet-allorigins.herokuapp.com/get?disableCache=true&url=${url}`;
@@ -57,10 +55,6 @@ const model = (rssUrl, responseState, feedback, err) => {
     watchedFormState.rssForm.state = 'exist';
     return;
   }
-
-  const isEqual = (post1, post2) => (
-    post1.title === post2.title && post1.description === post2.description
-  );
   watchedResponseState.response.state = 'procesing';
   const updateFeeds = (url) => {
     setTimeout(() => {
@@ -112,31 +106,10 @@ const initApp = () => {
   const feedback = feedbackMessages();
 
   i18next
-    .init({
-      lng: 'ru',
-      debug: false,
-      resources: {
-        ru: {
-          translation: {
-            feedback: {
-              invalid: 'Ссылка должна быть валидным URL',
-              exist: 'RSS уже существует',
-              empty: 'Не должно быть пустым',
-              unsuccess: 'Ошибка сети',
-              parsererror: 'Ресурс не содержит валидный RSS',
-              success: 'RSS успешно загружен',
-              loading: 'Загрузка...',
-            },
-          },
-        },
-      },
-    })
-    .then(() => {
+    .init({ lng: 'ru', debug: false, resources: { ru } }).then(() => {
       const form = document.querySelector('.rss-form');
 
       form.addEventListener('submit', (e) => {
-        console.log(responseState);
-        console.log(formState);
         e.preventDefault();
         const formData = new FormData(form);
         const url = formData.get('url');
