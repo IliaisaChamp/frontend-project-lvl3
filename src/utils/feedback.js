@@ -1,9 +1,9 @@
-const input = document.querySelector('.inputUrl');
-const form = document.querySelector('.rss-form');
-const button = document.querySelector('button[aria-label="add"]');
-const feedbackEl = document.querySelector('.feedback');
-
 const feedbackMessages = () => {
+  const input = document.querySelector('.inputUrl');
+  const form = document.querySelector('.rss-form');
+  const button = document.querySelector('button[aria-label="add"]');
+  const feedbackEl = document.querySelector('.feedback');
+
   const showValidMessage = (message, flag) => {
     feedbackEl.textContent = message;
     feedbackEl.classList.toggle('text-danger', !flag);

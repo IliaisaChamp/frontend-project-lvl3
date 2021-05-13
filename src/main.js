@@ -44,7 +44,7 @@ const model = (rssUrl, responseState, feedback, err) => {
         createFeed(responseState.feeds);
         feedback.resetForm();
       }
-      // if (value === 'procesing') feedback.showResponseMessage(i18next.t('feedback.loading'), true, true);
+
       if (value === 'update') updateFeed(responseState.feeds);
     }
   });
