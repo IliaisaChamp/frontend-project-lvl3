@@ -136,6 +136,8 @@ const initApp = () => {
       const form = document.querySelector('.rss-form');
 
       form.addEventListener('submit', (e) => {
+        console.log(responseState);
+        console.log(formState);
         e.preventDefault();
         const formData = new FormData(form);
         const url = formData.get('url');

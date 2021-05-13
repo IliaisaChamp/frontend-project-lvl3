@@ -8,6 +8,8 @@ const feedbackMessages = () => {
     feedbackEl.textContent = message;
     feedbackEl.classList.toggle('text-danger', !flag);
     input.classList.toggle('is-invalid', !flag);
+    button.removeAttribute('disabled');
+    input.removeAttribute('readonly');
   };
 
   const showResponseMessage = (message, flag = false, isDisabled) => {
