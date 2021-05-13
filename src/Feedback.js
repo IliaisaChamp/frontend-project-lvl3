@@ -3,7 +3,7 @@ const form = document.querySelector('.rss-form');
 const button = document.querySelector('button[aria-label="add"]');
 const feedbackEl = document.querySelector('.feedback');
 
-export default {
+const feedback = {
   showValidMessage(message, flag) {
     feedbackEl.textContent = message;
     feedbackEl.classList.toggle('text-danger', !flag);
@@ -23,3 +23,5 @@ export default {
     form.reset();
   },
 };
+
+export default feedback;
