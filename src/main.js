@@ -5,7 +5,7 @@ import axios from 'axios';
 import parser from './parser';
 import schema from './utils/validate';
 import ru from './utils/texts';
-import feedback from './utils/feedback';
+import feedbackMessage from './utils/feedback';
 import { createFeed, updateFeed } from './views';
 import './scss/index.sass';
 import 'bootstrap/js/dist/modal';
@@ -17,6 +17,7 @@ const getRssData = (url) => {
 };
 
 const model = (rssUrl, state, err) => {
+  const feedback = feedbackMessage;
   const watchedFormState = onChange(state, (path, value) => {
     if (path === 'rssForm.state') {
       if (value === 'invalid') feedback.showValidMessage(i18next.t('feedback.invalid'), false);
