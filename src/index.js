@@ -1,3 +1,4 @@
-import initApp from './init.js';
+import initApp from './main';
+import domReady from './utils/domready';
 
-initApp();
+domReady().then(() => initApp());
