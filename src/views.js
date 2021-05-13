@@ -18,7 +18,7 @@ const addModalInfo = (data) => {
 
 const addArticlesToList = (posts, url) => {
   const createArticle = (post, id) => {
-    const link = `<a href="${post.link}" class="font-weight-bold" data-id="" target="_blank" rel="noopener noreferrer">${post.title}</a>`;
+    const link = `<a href="${post.link}" class="fw-bold" data-id="${id + 1}" target="_blank" rel="noopener noreferrer">${post.title}</a>`;
     const button = `<button type="button" class="btn btn-primary btn-sm" data-id="${id + 1}" data-url="${url}" data-bs-toggle="modal" data-bs-target="#modal">Просмотр</button>`;
     return `<li class="list-group-item d-flex justify-content-between align-items-start">${link}${button}</li>`;
   };

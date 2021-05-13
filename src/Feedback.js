@@ -12,9 +12,13 @@ export default class Feedback {
     this.input.classList.toggle('is-invalid', !flag);
   }
 
-  showResponseMessage(message, flag = true) {
+  showResponseMessage(message, flag = false, isDisabled) {
     this.feedback.textContent = message;
-    this.feedback.classList.toggle(`${!flag ? 'text-success' : 'text-danger'}`, !flag);
-    this.button.toggleAttribute('disabled', flag);
+    this.feedback.classList.toggle(`${flag ? 'text-success' : 'text-danger'}`, true);
+    this.button.toggleAttribute('disabled', isDisabled);
+  }
+
+  resetForm() {
+    this.form.reset();
   }
 }

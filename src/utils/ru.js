@@ -3,7 +3,9 @@ export default {
     feedback: {
       invalid: 'Ссылка должна быть валидным URL',
       exist: 'RSS уже существует',
-      unsuccess: 'RSS ошибка загрузки',
+      empty: 'Не должно быть пустым',
+      unsuccess: 'Ошибка сети',
+      parsererror: 'Ресурс не содержит валидный RSS',
       success: 'RSS успешно загружен',
       loading: 'Загрузка...',
     },
