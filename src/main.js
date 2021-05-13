@@ -16,14 +16,13 @@ const getRssData = (url) => {
   return axios.get(originsUlr).then((resolve) => parser(resolve.data));
 };
 
-const responseState = {
-  response: {
+const formState = {
+  rssForm: {
     state: null,
   },
-  feeds: {},
 };
 
-const model = (rssUrl, formState, feedback, err) => {
+const model = (rssUrl, responseState, feedback, err) => {
   const watchedFormState = onChange(formState, (path, value) => {
     if (path === 'rssForm.state') {
       if (value === 'invalid') feedback.showValidMessage(i18next.t('feedback.invalid'), false);
@@ -105,10 +104,11 @@ const model = (rssUrl, formState, feedback, err) => {
 };
 
 const initApp = () => {
-  const formState = {
-    rssForm: {
+  const responseState = {
+    response: {
       state: null,
     },
+    feeds: {},
   };
   const feedback = feedbackMessages();
 
@@ -142,10 +142,10 @@ const initApp = () => {
         url.trim();
         schema
           .validate({ rssUrl: url, input: url })
-          .then((resolve) => model(resolve.rssUrl, formState, feedback))
+          .then((resolve) => model(resolve.rssUrl, responseState, feedback))
           .catch((error) => {
             if (error) {
-              model(null, formState, feedback, error);
+              model(null, responseState, feedback, error);
             }
           });
       });
