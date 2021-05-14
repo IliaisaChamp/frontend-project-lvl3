@@ -1,6 +1,6 @@
-RSS агрегатор  
+### RSS агрегатор  
 [frontend-project-lvl3-tan.vercel.app](https://frontend-project-lvl3-tan.vercel.app/)
-### Hexlet tests and linter status:
+### Tests and linter status:
 [![Actions Status](https://github.com/IliaisaChamp/frontend-project-lvl3/workflows/hexlet-check/badge.svg)](https://github.com/IliaisaChamp/frontend-project-lvl3/actions)  
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/6be4827608475acde049/maintainability)](https://codeclimate.com/github/IliaisaChamp/frontend-project-lvl3/maintainability)  
